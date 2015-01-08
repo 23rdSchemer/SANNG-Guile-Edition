@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 Why another Neural Network Module?
 
-This program is a simple neural network module that I have implemented in the Scheme Programming Language.  Currently it only supports backpropogated neural networks, however, with the macro operation "makenet/n" arbitrarily complex neural network structures can be created wihtout having to manually enter in every aspect of the configuration.  
+This program is a simple neural network module that I have implemented in the Scheme Programming Language.  Currently it only supports backpropogated neural networks, however, with the macro operation "make-net/n" arbitrarily complex neural network structures can be created wihtout having to manually enter in every aspect of the configuration.  
 
 Further, with the macro "ngo/4," the neuralnetwork can be trained with arbitrarily large datasets, which it normalizes, gradually stepping down the expected Mean Square Error to improve its ability to recognize patterns and feeding in a final input to the trained neural network which can be used to test the predictive capability of the net against future data.  
 
@@ -47,13 +47,13 @@ How to use the Module
 
 Since the program is just one file, it should be simple enough to load it into your program.  Simply use the nonstandard procedure load:  (load "{your file location}/net.scm").  Any r6rS compliant Scheme should be able to use the module.  Currently, MIT-GNU Scheme does not support brackets, so it will not work in MIT-GNU scheme, however, if you simply go through the module and switch out the brackets for parentheses it should work.
 
-The source file contains a description of all of the functions, however, for those that don't want to wade through the couple hundred lines of code, here is a brief description of the two most useful functions:
+The source file contains a description of all of the functions.  However, for those that don't want to wade through the couple hundred lines of code, here is a brief description of the two most useful functions:
 
 make-net:  make-net takes n arguments and returns a neural network data structure of n layers with randomized connections and all nodes initialized to zero.  For example, (make-net 2 4 2) will create a neural network with a 2 node input layer, a 2 node output layer and a 4 node hidden layer.  The actual data structure will look like this:
     #('(#(0 0) #(0 0 0 0) #(0 0)) ((#(...) #(...) #(...) #(...)) (#(... ...) #(... ...)))),
-    where the ...s are each two random numbers between 0 and 1.
+    where the elipses are each two random numbers between 0 and 1.
 
-ngo:  takes 4 arguments, a training-set, a neural network data structure, an ideal-MSE and a final input-vecotr the training-set should be a list with two lists, a list-of-inputs and a list-of-outputs.  These lists should be the same length, and each input / output should match the input / output nodes of the neural network.  e.g. 
-'((#(24 543) #(123 435)) (#(234 342) #( 1234))) could be a training-set for a neural network made with (make-net 2 4 2).  Keep in mind that this macro takes non-normalized training-sets and final inputs and normalizes them, so don't use values between 0 and 1 with ngo (use run instead).
+ngo:  takes 4 arguments, a training-set, a neural network data structure, an ideal-MSE and a final input-vecotr. The training-set should be a list containing two lists, a list-of-inputs and a list-of-outputs.  These lists should be the same length, and each input / output should match the input / output nodes of the neural network.  e.g. 
+'((#(24 543) #(123 435)) (#(234 342) #( 1234))) could be a training-set for a neural network made with (make-net 2 4 2).  Keep in mind that this macro takes non-normalized training-sets and final inputs and normalizes them, so don't use values between 0 and 1 with ngo (use run-net instead).
 
-see the source code for the a description of the rest of the program.
+Note:  be sure to play close attention to what the program is doing with the four global variables, you may very well want to modify these depending on the way you are implementing the neural network.
