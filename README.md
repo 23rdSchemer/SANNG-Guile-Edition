@@ -1,5 +1,5 @@
 # SANN
-Scheme Artificial Neural Network v0.0
+Scheme Artificial Neural Network v0.1
 
 Copyright (C) 2014-5  Sam Findler
 
@@ -56,4 +56,21 @@ make-net:  make-net takes n arguments and returns a neural network data structur
 ngo:  takes 4 arguments, a training-set, a neural network data structure, an ideal-MSE and a final input-vecotr. The training-set should be a list containing two lists, a list-of-inputs and a list-of-outputs.  These lists should be the same length, and each input / output should match the input / output nodes of the neural network.  e.g. 
 '((#(24 543) #(123 435)) (#(234 342) #( 1234))) could be a training-set for a neural network made with (make-net 2 4 2).  Keep in mind that this macro takes non-normalized training-sets and final inputs and normalizes them, so don't use values between 0 and 1 with ngo (use run-net instead).
 
-Note:  be sure to play close attention to what the program is doing with the four global variables, you may very well want to modify these depending on the way you are implementing the neural network.
+note1:  Since update 1, "ngo" uses two functions: "run-normalized" and "dno" (denormalized-output).  These can be split up and increase the usefulness of the program
+
+run-normalized is useful if you want to save a neural net for future updates and outputs:
+For example:
+for some training-set and network, we could declare 
+(define network_2 (run-normalized (car training-set) (cadr training-set) network ideal-MSE))
+then later call (run-normalized (car training-set-2) (cadr training-set-2) network_2 ideal-MSE) and train the net some more
+
+We can then combine run-normalized with dno and get a sort of delayed and reusable ngo
+for example if we run (dno network_2 input) for some input, it would be as if we initially ran
+(ngo training-set network ideal-MSE input), but it can be useful to split these processes up and to be able to save a trained neural network
+
+as always, see the source code for further documentation
+
+
+note2:  be sure to play close attention to what the program is doing with the four global variables, you may very well want to modify these depending on the way you are implementing the neural network.
+
+
