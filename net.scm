@@ -241,18 +241,32 @@
 
 
 
-;;ngo is a macro that takes a training-set (a list containing a list of inputs followed by a list of ideal-outputs), a network (i.e. nodes + connections), an initial ideal MSE and an input to use with the trained net.
+;;ngo is a function that takes a training-set (a list containing a list of inputs followed by a list of ideal-outputs), a network (i.e. nodes + connections), an initial ideal MSE and an input to use with the trained net.
 ;;it normalizes/trains the net with the training set, gradually decreasing the ideal-MSE by *step-down*, and outputs a vector with the denormalized predicted output of the vector
 ;;it will normally look something like:  (ngo '(list-of-inputs list-of-outputs) (make-net ...) (number between 0.2 and 0.5) input-vector) 
 ;;if your output is already between 0 and 1 or -1 and 1, use go instead
-(define-syntax ngo
-	(syntax-rules ()
-		[(_ training-set network ideal-MSE input) 
-			(let* ([x (run-normalized (car training-set) (cadr training-set) network ideal-MSE)]
-				[maximum (apply max (vector->list input))]
-				[minimum (apply min (vector->list input))]
-				[output (out (initialize-net x (normalize-vec input)))])
-				(denormalize-vec output maximum minimum))]))
+(define (ngo training-set network ideal-MSE input) 
+			(let ([x (run-normalized (car training-set) (cadr training-set) network ideal-MSE)])
+				(dno x input)))
+
+;;dno (denormalized-output is a way to get the denormalized output of a net run through with one input.
+(define dno (network input)
+	(let   ([maximum (apply max (vector->list input))]
+		[minimum (apply min (vector->list input))]
+		[output (out (initialize-net network (normalize-vec input)))])
+		(denormalize-vec output maximum minimum)))
+
+
+;;note:  run-normalized is useful if you want to save a neural net for future updates and outputs:
+;;For example:
+;;for some training-set and network, we could declare 
+;;(define network_2 (run-normalized (car training-set) (cadr training-set) network ideal-MSE))
+;;then later call (run-normalized (car training-set-2) (cadr training-set-2) network_2 ideal-MSE) and train the net some more
+
+;;We can then combine run-normalized with dno and get a sort of delayed and reusable ngo
+;;for example if we run (de-normalized-output network_2 input) for some input, it would be as if we initially ran
+;;(ngo training-set network ideal-MSE input), but it can be useful to split these processes up and to be able to save a trained neural network
+
 
 ;;Default starting values for global variables
 (define *learning-rate* 0.5) ;used in back-propagation
