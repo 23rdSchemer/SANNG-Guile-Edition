@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 <h5>Why another Neural Network Module?</h5>
 
-This program is a simple neural network module that I have implemented in the Scheme Programming Language.  Currently it only supports backpropogated neural networks, however, with the macro operation "make-net/n" arbitrarily complex neural network structures can be created wihtout having to manually enter in every aspect of the configuration.  
+This program is a simple neural network module that I have implemented in the Scheme Programming Language.  Currently it only supports backpropogated neural networks, however, with the macro operation "make-net/n" arbitrarily complex neural network structures can be created wihtout having to manually enter in every aspect of the configuration.  Note:  only racket currently supports this program, but I am modifying it to work with Guile Scheme.
 
 Further, with the function "ngo/4," the neuralnetwork can be trained with arbitrarily large datasets, which it normalizes, gradually stepping down the expected Mean Square Error to improve its ability to recognize patterns.  It then feeds in a final input to the trained neural network which can be used to test the predictive capability of the net against future data.  
 
