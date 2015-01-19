@@ -250,7 +250,7 @@
 				(dno x input)))
 
 ;;dno (denormalized-output is a way to get the denormalized output of a net run through with one input.
-(define dno (network input)
+(define (dno network input)
 	(let   ([maximum (apply max (vector->list input))]
 		[minimum (apply min (vector->list input))]
 		[output (out (initialize-net network (normalize-vec input)))])
