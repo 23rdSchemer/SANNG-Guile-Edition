@@ -19,7 +19,8 @@
 ;along with this program; if not, write to the Free Software
 ;Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-13101, USA.
 
-
+(module S.A.N.N.G.
+	
 
 ;;These Functions build the ANN. Ultimately only make-net/n should be used where the arity n is the number of layers and each input is the number of nodes in the layer.
 (define-syntax make-nodes
@@ -274,3 +275,4 @@
 (define *previous-adj* 0) ;this is actually calculated, but it must first be declared
 (define *step-down* 0) ;this is how much the ideal-MSE is stepped down after each input training, as your training set grows, this should decrease, or else it will go bellow zero. 
 				;for extremely large training sets, this should be set to zero.
+)
