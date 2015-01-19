@@ -1,3 +1,0 @@
-(repo git "git://github.com/23rdSchemer/SANNG-Chicken.git")
-(uri targz "https://codeload.github.com/23rdSchemer/SANNG-Chicken/tar.gz/0.1")
-(release "0.1")
