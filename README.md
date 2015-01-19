@@ -1,5 +1,5 @@
 # S.A.N.N.G.
-Scheme Artificial Neural Network Generator v0.1
+The Scheme Artificial Neural Network Generator v0.1
 
 Copyright (C) 2014-5  Sam Findler
 
