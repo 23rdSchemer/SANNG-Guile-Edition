@@ -1,0 +1,7 @@
+(compile -s -03 -d1 net.scm -j net)
+(compile -s net.import.scm -03 -d0)
+
+(install-extension
+	'net
+	'("net.so" "net.import.so")
+	'((version "0.1")))
