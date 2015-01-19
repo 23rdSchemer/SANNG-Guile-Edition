@@ -61,7 +61,7 @@ The source file contains a description of all of the functions.  However, for th
 <b>ngo/4</b> takes 4 arguments, a training-set, a neural network data structure, an ideal-MSE and a final input-vecotr. The training-set should be a list containing two lists, a list-of-inputs and a list-of-outputs.  These lists should be the same length, and each input / output should match the input / output nodes of the neural network.  e.g. 
 '((#(24 543) #(123 435)) (#(234 342) #( 1234))) could be a training-set for a neural network made with (make-net 2 4 2).  Keep in mind that this macro takes non-normalized training-sets and final inputs and normalizes them, so don't use values between 0 and 1 with ngo (use run-net instead).
 
-<b>note:</b>  Since update 1, "ngo" uses two functions: "run-normalized" and "dno" (denormalized-output).  These can be split up and increase the usefulness of the program
+(<b>note:</b>  Since update 1, "ngo" uses two functions: "run-normalized" and "dno" (denormalized-output).  These can be split up and increase the usefulness of the program
 
 <b>run-normalized/4</b> takes an input set, an output set, a neural network and an ideal-MSE, normalizes the input and output, trains the neural network with the data and returns the last configuration of the neural network.
 
@@ -76,7 +76,7 @@ this saves the neural network configurtaion for future use. we could then call (
 
 We can then combine run-normalized with dno and get a sort of delayed and reusable ngo
 for example if we run (dno network_2 input) for some input, it would be as if we initially ran
-(ngo training-set network ideal-MSE input), but it can be useful to split these processes up and to be able to save a trained neural network.
+(ngo training-set network ideal-MSE input), but it can be useful to split these processes up and to be able to save a trained neural network.)
 
 
 That's all for now, but I'm sure I'll be adding more features later.
