@@ -54,18 +54,18 @@ Since the program is just one file, it should be simple enough to load it into y
 
 The source file contains a description of all of the functions.  However, for those that don't want to wade through the couple hundred lines of code, here is a brief description of the two most useful functions:
 
-<b>make-net/n<b> takes n arguments and returns a neural network data structure of n layers with randomized connections and all nodes initialized to zero.  For example, (make-net 2 4 2) will create a neural network with a 2 node input layer, a 2 node output layer and a 4 node hidden layer.  The actual data structure will look like this:
+make-net/n takes n arguments and returns a neural network data structure of n layers with randomized connections and all nodes initialized to zero.  For example, (make-net 2 4 2) will create a neural network with a 2 node input layer, a 2 node output layer and a 4 node hidden layer.  The actual data structure will look like this:
     #('(#(0 0) #(0 0 0 0) #(0 0)) ((#(...) #(...) #(...) #(...)) (#(... ...) #(... ...)))),
     where the elipses are each two random numbers between 0 and 1.
 
-<b>ngo/4<b> takes 4 arguments, a training-set, a neural network data structure, an ideal-MSE and a final input-vecotr. The training-set should be a list containing two lists, a list-of-inputs and a list-of-outputs.  These lists should be the same length, and each input / output should match the input / output nodes of the neural network.  e.g. 
+ngo/4 takes 4 arguments, a training-set, a neural network data structure, an ideal-MSE and a final input-vecotr. The training-set should be a list containing two lists, a list-of-inputs and a list-of-outputs.  These lists should be the same length, and each input / output should match the input / output nodes of the neural network.  e.g. 
 '((#(24 543) #(123 435)) (#(234 342) #( 1234))) could be a training-set for a neural network made with (make-net 2 4 2).  Keep in mind that this macro takes non-normalized training-sets and final inputs and normalizes them, so don't use values between 0 and 1 with ngo (use run-net instead).
 
-<b>note1:<b>  Since update 1, "ngo" uses two functions: "run-normalized" and "dno" (denormalized-output).  These can be split up and increase the usefulness of the program
+<b>note1:  Since update 1, "ngo" uses two functions: "run-normalized" and "dno" (denormalized-output).  These can be split up and increase the usefulness of the program<b>
 
-<b>run-normalized/4<b> takes an input set, an output set, a neural network and an ideal-MSE, normalizes the input and output, trains the neural network with the data and returns the last configuration of the neural network.
+run-normalized/4 takes an input set, an output set, a neural network and an ideal-MSE, normalizes the input and output, trains the neural network with the data and returns the last configuration of the neural network.
 
-<b>dno/2<b> takes a fully configured neural network and a non-normalized input vector, it then normalizes the input vector, runs it through the neural network and denormalizes the output.
+dno/2 takes a fully configured neural network and a non-normalized input vector, it then normalizes the input vector, runs it through the neural network and denormalizes the output.
 
 
 together, these are useful if you want to save a neural net for future updates and outputs:
