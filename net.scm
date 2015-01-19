@@ -1,7 +1,7 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                :SANN:              ;;
-;;The Scheme Artificial Neural Network;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;              :S.A.N.N.G.:             ;;
+;;The Artificial Neural Network Generator;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;Copyright (C) 2014-15 Sam Findler
 
