@@ -1,0 +1,5 @@
+( (license "LGPL")
+	(category data)
+	(needs syntax-rules)
+	(author "Sam Findler")
+	(synopsis "A Neural Network Generator for the Creation and Training of ANNS"))
