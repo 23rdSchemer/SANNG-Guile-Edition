@@ -52,7 +52,7 @@ If you find any errors or have suggestions for improvements, you may email me at
 
 <h5>How to use the Module</h5>
 
-Since the program is just one file, it should be simple enough to load it into your program.  Simply use the nonstandard procedure load:  (load "{your file location}/net.scm").  Any r6rS compliant Scheme should be able to use the module.  Currently, MIT-GNU Scheme does not support brackets, so it will not work in MIT-GNU scheme, however, if you simply go through the module and switch out the brackets for parentheses it should work.
+Since the program is just one file, it should be simple enough to load it into your program.  Simply use the nonstandard procedure load:  (load "{your file location}/net.scm").
 
 The source file contains a description of all of the functions.  However, for those that don't want to wade through the couple hundred lines of code, here is a brief description of the two most useful functions:
 
