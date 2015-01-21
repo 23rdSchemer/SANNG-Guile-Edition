@@ -17,7 +17,7 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
-<b>UPDATE:  as of the current update to version 1.0, there are three versions of this software available:  One for <ahref="github.com/23rdSchemer/SANNG-Guile-Edition">Guile Scheme</a>, one for <ahref="gitub.com/23rdSchemer/MIT-SANNG">MIT-Scheme</a> and one for <agref="planet.racket-lang.org/display.ss?package=sanng.plt&owner=23rdSchemer">Racket</a>.  They all should work more or less identicaly.  The only differences being in their random number generators and in the function "vector-map" which is unique to Racket
+<b>UPDATE:  as of the current update to version 1.0, there are three versions of this software available:  One for <a href="http://github.com/23rdSchemer/SANNG-Guile-Edition">Guile Scheme</a>, one for <a href="http://gitub.com/23rdSchemer/MIT-SANNG">MIT-Scheme</a> and one for <a href="http://planet.racket-lang.org/display.ss?package=sanng.plt&owner=23rdSchemer">Racket</a>.  They all should work more or less identicaly.  The only differences being in their random number generators and in the function "vector-map" which is unique to Racket
 
 
 <h5>Why another Neural Network Module?</h5>
