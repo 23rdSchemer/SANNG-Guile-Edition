@@ -1,30 +1,30 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;              :S.A.N.N.G.:             ;;
+;;                :SANNG:                ;;
 ;;The Artificial Neural Network Generator;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;Copyright (C) 2014-15 Sam Findler
 
-;This library is free software; you can redistribute it and/or
-;modify it under the terms of the GNU Lesser General Public
-;License as published by the Free Software Foundation; either
-;version 2.1 of the License, or (at your option) any later version.
+;This program is free software; you can redistribute it and/or
+;modify it under the terms of the GNU General Public License
+;as published by the Free Software Foundation; either version 2
+;of the license, or (at your option) any later version.
 
-;This library is distributed in the hope that it will be useful,
+;This program is distributed in the hope that it will be useful,
 ;but WITHOUT ANY WARRANTY; without even the implied warranty of
-;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-;Lesser General Public License for more details.
+;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;GNU General Public License for more details.
 
-;You should have received a copy of the GNU Lesser General Public
-;License along with this library; if not, write to the Free Software
-;Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+;You should have received a copy of the GNU General Public License
+;along with this program; if not, write to the Free Software
+;Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-13101, USA.
 
 
 
 ;;These Functions build the ANN. Ultimately only make-net/n should be used where the arity n is the number of layers and each input is the number of nodes in the layer.
 (define-syntax make-nodes
 	(syntax-rules ()
-		[(_ a b ...) (list (make-vector a 0) (make-vector b 0) ...)]))
+		((_ a b ...) (list (make-vector a 0) (make-vector b 0) ...))))
 (define (make-connections net)
 	(let rec ((temp-net net) 
 			(connections '()))
@@ -37,13 +37,13 @@
 (define (connect-node input)
 	(let rec ((vec (make-vector (vector-length input) 0)) (count 0) (len (vector-length input)))
 		(if (eq? count len) vec
-			(begin (vector-set! vec count (random))
+			(begin (vector-set! vec count (random:uniform))
 				(rec vec (+ count 1) len)))))
 (define-syntax make-net
 	(syntax-rules ()
-	 [(_ a b ...) 
+	 ((_ a b ...) 
 			(let ((x (make-nodes a b ...)))
-				(vector x (make-connections x)))]))
+				(vector x (make-connections x))))))
 
 
 ;;These functions activate the ANN.  Only initialize-net/2 should be used.  It's input is an empty ANN (produced by make-net/n) and an input vector.
@@ -229,13 +229,13 @@
 		(if (eq? lst '()) (reverse catcher)
 			(rec (cdr lst) (cons (normalize-vec (car lst)) catcher)))))
 (define (normalize-vec vec)
-	(vector-map (lambda (x) (normalize x (apply max (vector->list vec)) (apply min (vector->list vec)) 1 0)) vec))
+	(map1 (lambda (x) (normalize x (apply max (vector->list vec)) (apply min (vector->list vec)) 1 0)) vec (vector-length vec) 0))
 (define (denormalize-vec-list lst datamax datamin)
 	(let rec ((lst lst) (catcher '()))
 		(if (eq? lst '()) (reverse catcher)
-			(rec (cdr lst) (cons denormalize-vec (car lst) datamax datamin) catcher))))
+			(rec (cdr lst) (cons (denormalize-vec (car lst) datamax datamin) catcher)))))
 (define (denormalize-vec vec datamax datamin)
-	(vector-map (lambda (x) (denormalize x datamax datamin 1 0)) vec))
+	(map1 (lambda (x) (denormalize x datamax datamin 1 0)) vec (vector-length vec) 0))
 (define (run-normalized input-list output-list network initial-ideal-MSE) 
 	(run-net (normalize-vec-list input-list) (normalize-vec-list output-list) network initial-ideal-MSE))
 
@@ -246,14 +246,14 @@
 ;;it will normally look something like:  (ngo '(list-of-inputs list-of-outputs) (make-net ...) (number between 0.2 and 0.5) input-vector) 
 ;;if your output is already between 0 and 1 or -1 and 1, use go instead
 (define (ngo training-set network ideal-MSE input) 
-			(let ([x (run-normalized (car training-set) (cadr training-set) network ideal-MSE)])
+			(let ((x (run-normalized (car training-set) (cadr training-set) network ideal-MSE)))
 				(dno x input)))
 
 ;;dno (denormalized-output is a way to get the denormalized output of a net run through with one input.
 (define (dno network input)
-	(let   ([maximum (apply max (vector->list input))]
-		[minimum (apply min (vector->list input))]
-		[output (out (initialize-net network (normalize-vec input)))])
+	(let   ((maximum (apply max (vector->list input)))
+		(minimum (apply min (vector->list input)))
+		(output (out (initialize-net network (normalize-vec input)))))
 		(denormalize-vec output maximum minimum)))
 
 
@@ -274,3 +274,10 @@
 (define *previous-adj* 0) ;this is actually calculated, but it must first be declared
 (define *step-down* 0) ;this is how much the ideal-MSE is stepped down after each input training, as your training set grows, this should decrease, or else it will go bellow zero. 
 				;for extremely large training sets, this should be set to zero.
+
+;;map1 replaces racket's vector-map for our purposes
+(define (map1 fn vec len cnt)
+	(let rec ((v vec) (c cnt))
+		(if (= c len) v
+			(begin  (vector-set! v c (fn (vector-ref v c)))
+				(rec v (+ c 1))))))
